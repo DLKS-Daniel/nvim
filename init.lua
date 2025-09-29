@@ -36,7 +36,7 @@ vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.nvim",            version = "main" },
 })
 vim.g.vimwiki_list = { {
-    path = '$HOME/vimwiki/',
+    path = '~\\vimwiki',
     syntax = 'markdown',
     ext = '.md'
 } }
@@ -51,22 +51,20 @@ require("nvim-treesitter.configs").setup({
     ensure_installed = { "python", "lua", "bash", "json", "markdown" },
     highlight = { enable = true }
 })
-vim.cmd [[colorscheme tokyonight-moon]]
+vim.cmd [[colorscheme tokyonight-night]]
 vim.cmd [[hi statusline guibg=NONE]]
 
 vim.keymap.set("t", "<Esc>", "<c-\\><c-n>")
+vim.keymap.set("n", "<Backspace>", ":nohl<CR>")
 vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader>g", "<cmd>Git<CR>")
-vim.keymap.set("n", "<leader>t", "<cmd>bot terminal<CR>i")
 vim.keymap.set("n", "<leader>y", "<cmd>%y+<CR>")
+vim.keymap.set("n", "<leader>t", "<cmd>bot terminal<CR>i")
 vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
-vim.keymap.set("n", "<leader>h", "<cmd>Pick help<CR>")
 vim.keymap.set("n", "<leader>r", "<cmd>Pick grep_live<CR>")
-vim.keymap.set("n", "<leader>p", "<cmd>!uv run %<CR>")
 vim.keymap.set('n', '<leader>q', require("mini.bufremove").delete)
 vim.keymap.set("n", "<C-n>", "<cmd>bnext<cr>")
 vim.keymap.set("n", "<C-p>", "<cmd>bprev<cr>")
-vim.keymap.set("n", "<Backspace>", ":nohl<CR>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "gD", vim.lsp.buf.definition)
