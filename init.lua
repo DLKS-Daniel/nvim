@@ -13,6 +13,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.fillchars = { diff = "╱" }
 vim.opt.statusline:prepend "(%n) "
 vim.opt.pumheight = 10
+vim.opt.scrolloff = 10
 vim.opt.swapfile = false
 vim.opt.number = true
 vim.opt.undofile = true
@@ -37,12 +38,8 @@ vim.pack.add({
     { src = "https://github.com/tpope/vim-fugitive" },
     { src = "https://github.com/tpope/vim-surround" },
 })
+vim.g.vimwiki_list = { { syntax = 'markdown', ext = '.md' } }
 
-vim.g.vimwiki_list = { {
-    path = '~\\vimwiki',
-    syntax = 'markdown',
-    ext = '.md'
-} }
 local choose_all = function()
     local mappings = require("mini.pick").get_picker_opts().mappings
     vim.api.nvim_input(mappings.mark_all .. mappings.choose_marked)
@@ -58,13 +55,14 @@ require("nvim-treesitter.configs").setup({
     highlight = { enable = true }
 })
 vim.cmd [[colorscheme tokyonight-moon]]
-vim.cmd [[set statusline+=\ \|%n\|]]
+require("mini.misc").setup_termbg_sync()
 vim.cmd [[ hi statusline guibg=NONE ]]
 vim.keymap.set("n", "<leader>e", "<cmd>Oil<cr>")
 vim.keymap.set("n", "<leader>g", "<cmd>Git<cr>")
 vim.keymap.set("n", "<leader>y", "<cmd>%y+<CR>")
+vim.keymap.set("n", "<leader>m", "<cmd>marks<CR>:'")
 vim.keymap.set("n", "<leader>t", "<cmd>bot terminal<cr>i")
-vim.keymap.set("n", "<Backspace>", ":nohl<cr>")
+vim.keymap.set("n", "<Backspace>", ":nohl<cr>", { silent = true })
 vim.keymap.set("n", "<leader>f", "<cmd>Pick files<cr>")
 vim.keymap.set("n", "<leader>r", "<cmd>Pick grep_live<cr>")
 vim.keymap.set("n", "<leader>js", vim.lsp.buf.format)
@@ -74,8 +72,10 @@ vim.keymap.set("n", "<C-n>", "<cmd>bnext<cr>")
 vim.keymap.set("n", "<C-p>", "<cmd>bprevious<cr>")
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv")
+vim.keymap.set("n", "U", "<C-r>")
 vim.keymap.set("t", "<Esc>", "<c-\\><c-n>")
 vim.keymap.set("n", "<leader>ww", "<cmd>edit ~/vimwiki/index.md<cr>")
+vim.keymap.set("n", "<leader>p", "<cmd>!uv run %<cr>")
 vim.keymap.set("n", "<leader>l",
     function() vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text }) end)
 vim.keymap.set("i", "<CR>", function()
@@ -107,5 +107,5 @@ vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.lsp.config('*', { root_markers = { '.git' } })
-vim.diagnostic.config({ virtual_lines = true })
+vim.diagnostic.config({ virtual_text = true })
 vim.lsp.enable({ "lua_ls", "basedpyright", "jsonls", "ruff", "marksman", "superhtml" })
