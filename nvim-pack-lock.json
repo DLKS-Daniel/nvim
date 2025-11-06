@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "conform.nvim": {
+      "rev": "cde4da5",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
     "mini.nvim": {
       "rev": "89eecd8",
       "src": "https://github.com/nvim-mini/mini.nvim",
