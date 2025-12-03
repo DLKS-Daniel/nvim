@@ -1,11 +1,11 @@
 {
   "plugins": {
     "conform.nvim": {
-      "rev": "cde4da5",
+      "rev": "ffe26e8",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "mini.nvim": {
-      "rev": "89eecd8",
+      "rev": "dca9884",
       "src": "https://github.com/nvim-mini/mini.nvim",
       "version": "'main'"
     },
@@ -14,11 +14,11 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
-      "rev": "200df01",
+      "rev": "cbcb3f9",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "tokyonight.nvim": {
-      "rev": "d14614c",
+      "rev": "5da1b76",
       "src": "https://github.com/folke/tokyonight.nvim"
     },
     "vim-fugitive": {
