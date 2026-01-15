@@ -1,9 +1,10 @@
 vim.g.mapleader = " "
 vim.opt.signcolumn = "yes:1"
 vim.opt.cursorlineopt = "number"
+vim.opt.wildmode = "noselect"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = "menu,menuone,noinsert"
-vim.opt.wildmode = "noselect"
+vim.opt.swapfile = false
 vim.opt.fillchars = { diff = "╱" }
 vim.opt.pumheight = 10
 vim.opt.shiftwidth = 2
@@ -20,21 +21,21 @@ vim.opt.ignorecase = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.relativenumber = true
+vim.cmd([[hi Normal guibg=None]])
 
 vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.nvim", version = "main" },
-    { src = "https://github.com/folke/tokyonight.nvim" },
-    { src = "https://github.com/stevearc/conform.nvim" },
+    { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/tpope/vim-fugitive" },
     { src = "https://github.com/tpope/vim-surround" },
-    { src = "https://github.com/stevearc/oil.nvim" },
+    { src = "https://github.com/stevearc/conform.nvim" },
     { src = "https://github.com/vimwiki/vimwiki" },
 })
 
 vim.g.vimwiki_list = { { path = "~/vimwiki", syntax = "markdown", ext = ".md" } }
 vim.g.vimwiki_global_ext = 0
 
-local plugins = { "mini.diff", "mini.icons", "mini.completion", "mini.pick", "tokyonight" }
+local plugins = { "mini.diff", "mini.icons", "mini.completion", "mini.pick" }
 for _, value in ipairs(plugins) do
     require(value).setup()
 end
@@ -46,13 +47,14 @@ require("conform").setup({
     },
     formatters_by_ft = {
         lua = { "stylua" },
+        toml = { "taplo" },
+        rust = { "rustfmt" },
         json = { "prettier" },
         markdown = { "prettier" },
         python = { "ruff_format" },
     },
 })
 
-vim.cmd([[colorscheme tokyonight-storm]])
 local opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "v" }, "æ", ":")
 vim.keymap.set("n", "U", "<C-R>", opts)
@@ -67,22 +69,13 @@ vim.keymap.set("n", "<leader>r", "<cmd>Pick grep_live<cr>", opts)
 vim.keymap.set("n", "<leader>y", "<cmd>%y+<cr>", opts)
 vim.keymap.set("n", "<leader>js", require("conform").format, opts)
 vim.keymap.set("n", "<leader>q", require("mini.bufremove").delete)
-vim.keymap.set("n", "grd", vim.diagnostic.setqflist, opts)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 vim.keymap.set("n", "go", require("mini.diff").toggle_overlay)
 vim.keymap.set("n", "<Backspace>", ":nohl<cr>", opts)
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", opts)
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv", opts)
 vim.keymap.set("v", "<", "<gv", opts)
-vim.keymap.set("v", ">", ">gv", opts)
 vim.keymap.set("t", "<Esc>", "<c-\\><c-n>", opts)
-vim.keymap.set("i", "<CR>", function()
-    if vim.fn.pumvisible() == 1 then
-        return "<C-e><CR>"
-    else
-        return "<CR>"
-    end
-end, { expr = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -97,10 +90,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
     end,
 })
 
-vim.diagnostic.config({ virtual_text = true, underline = true })
-
+vim.diagnostic.config({ underline = true, virtual_text = true })
 vim.opt.foldlevel = 99
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
-
-vim.lsp.enable({ "lua_ls", "ty", "ruff", "jsonls" }) -- Formatters and LSPs installed with winget, uv, and npm
+vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
+vim.lsp.enable({ "ty", "jsonls", "rust_analyzer" })

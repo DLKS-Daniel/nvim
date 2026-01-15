@@ -4,18 +4,18 @@
       "rev": "8314f4c",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "koda.nvim": {
+      "rev": "c422f6a",
+      "src": "https://github.com/oskarnurm/koda.nvim"
+    },
     "mini.nvim": {
-      "rev": "02fc1af",
+      "rev": "fb4ccfe",
       "src": "https://github.com/nvim-mini/mini.nvim",
       "version": "'main'"
     },
     "oil.nvim": {
       "rev": "81b8a91",
       "src": "https://github.com/stevearc/oil.nvim"
-    },
-    "tokyonight.nvim": {
-      "rev": "5da1b76",
-      "src": "https://github.com/folke/tokyonight.nvim"
     },
     "vim-fugitive": {
       "rev": "61b51c0",
