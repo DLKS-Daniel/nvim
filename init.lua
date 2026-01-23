@@ -39,7 +39,7 @@ vim.pack.add({
 vim.g.vimwiki_list = { { path = "~/vimwiki", syntax = "markdown", ext = ".md" } }
 vim.g.vimwiki_global_ext = 0
 
-local plugins = { "mini.completion", "mini.pick" }
+local plugins = { "mini.completion", "mini.pick", "mini.icons" }
 for _, value in ipairs(plugins) do
     require(value).setup()
 end
@@ -48,6 +48,7 @@ require("oil").setup({
     view_options = { show_hidden = true },
     lsp_file_methods = { enabled = true, timeout_ms = 1000, autosave_changes = true },
 })
+require("nvim-treesitter").install({ "rust", "python", "json", "vim", "vimdoc", "lua" }):wait(300000)
 require("conform").setup({
     formatters = { ["*"] = { async = true } },
     formatters_by_ft = {
@@ -82,6 +83,7 @@ vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", opts)
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv", opts)
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
+vim.keymap.set("t", "<Esc>", "<c-\\><c-n>", opts)
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -105,4 +107,4 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 vim.diagnostic.config({ underline = true, virtual_text = true })
-vim.lsp.enable({ "ty", "ruff", "jsonls" })
+vim.lsp.enable({ "ty", "ruff", "jsonls", "lua_ls" })

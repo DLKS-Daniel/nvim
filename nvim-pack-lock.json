@@ -8,10 +8,6 @@
       "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
-    "koda.nvim": {
-      "rev": "c422f6a",
-      "src": "https://github.com/oskarnurm/koda.nvim"
-    },
     "mini.nvim": {
       "rev": "fb4ccfe",
       "src": "https://github.com/nvim-mini/mini.nvim",
