@@ -4,6 +4,10 @@
       "rev": "8314f4c",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "csvview.nvim": {
+      "rev": "8d068c526ab5ade68226de036d533298cd93a399",
+      "src": "https://github.com/hat0uma/csvview.nvim"
+    },
     "gitsigns.nvim": {
       "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
