@@ -11,6 +11,7 @@ vim.opt.pumheight = 10
 vim.opt.shiftwidth = 2
 vim.opt.laststatus = 2
 vim.opt.tabstop = 2
+vim.opt.conceallevel = 0
 vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.autoread = true
@@ -25,7 +26,6 @@ vim.opt.splitright = true
 vim.opt.relativenumber = true
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-vim.api.nvim_create_autocmd("BufWritePre", { pattern = { "*" }, command = ":%s/\\r//e" })
 vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.nvim", version = "main" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
@@ -35,7 +35,6 @@ vim.pack.add({
     { src = "https://github.com/tpope/vim-fugitive" },
     { src = "https://github.com/tpope/vim-surround" },
     { src = "https://github.com/vimwiki/vimwiki" },
-    { src = "https://github.com/hat0uma/csvview.nvim" },
 })
 
 vim.g.vimwiki_list = { { path = "~/vimwiki", syntax = "markdown", ext = ".md" } }
@@ -54,6 +53,7 @@ require("nvim-treesitter").install({ "rust", "python", "json", "vim", "vimdoc", 
 require("conform").setup({
     formatters = { ["*"] = { async = true } },
     formatters_by_ft = {
+        c = { "clang-format" },
         lua = { "stylua" },
         toml = { "taplo" },
         json = { "prettier" },
@@ -66,10 +66,10 @@ vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "v" }, "æ", ":")
+vim.keymap.set({ "n", "v" }, "Æ", ":lua<Space>")
 vim.keymap.set("n", "U", "<C-R>", opts)
 vim.keymap.set("n", "<tab>", "<cmd>bnext<cr>", opts)
 vim.keymap.set("n", "<s-tab>", "<cmd>bprev<cr>", opts)
-vim.keymap.set("n", "<leader>p", "<cmd>make<cr>", opts)
 vim.keymap.set("n", "<leader>o", "<cmd>copen<cr>", opts)
 vim.keymap.set("n", "<leader>e", "<cmd>Oil<cr>", opts)
 vim.keymap.set("n", "<leader>g", "<cmd>Git<cr>", opts)
@@ -77,7 +77,6 @@ vim.keymap.set("n", "<leader>f", "<cmd>Pick files<cr>", opts)
 vim.keymap.set("n", "<leader>y", "<cmd>%y+<cr>", opts)
 vim.keymap.set("n", "<leader>r", require("conform").format, opts)
 vim.keymap.set("n", "<leader>q", require("mini.bufremove").delete)
-vim.keymap.set("n", "<leader>,", "<cmd>CsvViewToggle display_mode=border<cr>")
 vim.keymap.set("n", "go", "<cmd>Gitsign preview_hunk<cr>", opts)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 vim.keymap.set("n", "<Backspace>", ":nohl<cr>", opts)
@@ -109,4 +108,4 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 vim.diagnostic.config({ underline = true, virtual_text = true })
-vim.lsp.enable({ "ty", "ruff", "jsonls", "lua_ls", "rust_analyzer" })
+vim.lsp.enable({ "ty", "ruff", "jsonls", "lua_ls", "rust_analyzer", "clangd" })
