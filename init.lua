@@ -29,7 +29,6 @@ vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.nvim", version = "main" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-    { src = "https://github.com/lewis6991/gitsigns.nvim" },
     { src = "https://github.com/stevearc/conform.nvim" },
     { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/tpope/vim-fugitive" },
@@ -40,7 +39,7 @@ vim.pack.add({
 vim.g.vimwiki_list = { { path = "~/vimwiki", syntax = "markdown", ext = ".md" } }
 vim.g.vimwiki_global_ext = 0
 
-local plugins = { "mini.completion", "mini.pick", "mini.icons" }
+local plugins = { "mini.completion", "mini.pick", "mini.icons", "mini.diff" }
 for _, value in ipairs(plugins) do
     require(value).setup()
 end
@@ -67,20 +66,22 @@ vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 local opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "v" }, "æ", ":")
 vim.keymap.set({ "n", "v" }, "Æ", ":lua<Space>")
+vim.keymap.set({ "n", "v" }, "j", 'v:count == 0 ? "gj" : "j"', { expr = true })
+vim.keymap.set({ "n", "v" }, "k", 'v:count == 0 ? "gk" : "k"', { expr = true })
 vim.keymap.set("n", "U", "<C-R>", opts)
 vim.keymap.set("n", "<tab>", "<cmd>bnext<cr>", opts)
 vim.keymap.set("n", "<s-tab>", "<cmd>bprev<cr>", opts)
 vim.keymap.set("n", "<leader>o", "<cmd>copen<cr>", opts)
+vim.keymap.set("n", "<leader>p", "<cmd>w | make<cr>", opts)
 vim.keymap.set("n", "<leader>e", "<cmd>Oil<cr>", opts)
-vim.keymap.set("n", "<leader>g", "<cmd>Git<cr>", opts)
+vim.keymap.set("n", "<leader>g", "<cmd>Git | only<cr>", opts)
 vim.keymap.set("n", "<leader>f", "<cmd>Pick files<cr>", opts)
 vim.keymap.set("n", "<leader>y", "<cmd>%y+<cr>", opts)
 vim.keymap.set("n", "<leader>r", require("conform").format, opts)
 vim.keymap.set("n", "<leader>q", require("mini.bufremove").delete)
-vim.keymap.set("n", "go", "<cmd>Gitsign preview_hunk<cr>", opts)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-vim.keymap.set("n", "<Backspace>", ":nohl<cr>", opts)
-vim.keymap.set("t", "<Esc>", "<c-\\><c-n>", opts)
+vim.keymap.set("n", "<Backspace>", "<cmd>nohlsearch<cr>", opts)
+vim.keymap.set("t", "<Esc>", "<C-Bslash><C-n>", opts)
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", opts)
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv", opts)
 vim.keymap.set("v", "<", "<gv", opts)
@@ -88,15 +89,7 @@ vim.keymap.set("v", ">", ">gv", opts)
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        (vim.hl or vim.highlight).on_yank()
-    end,
-})
-vim.api.nvim_create_autocmd("CmdlineChanged", {
-    callback = function()
-        if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline():sub(1, 1) == "!" then
-            return
-        end
-        vim.fn.wildtrigger()
+        vim.highlight.on_yank()
     end,
 })
 vim.api.nvim_create_autocmd("FileType", {
