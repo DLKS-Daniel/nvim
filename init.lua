@@ -12,8 +12,8 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
-vim.opt.path:append("src/**,static/,config/")
 vim.opt.clipboard:append("unnamedplus")
+vim.opt.path:append("src/**,static/,config/")
 vim.opt.wildignore:append("*/__pycache__/*,*/node_modules/*")
 
 vim.cmd.colorscheme({ "retrobox" })

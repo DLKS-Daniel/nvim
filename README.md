@@ -1,11 +1,7 @@
-# Config
-
-Alt hvad du skal bruge.
+## Husk!
 
 - Installer LSP'er efter behov 
 - `rg` & `git` i $PATH
-
-## Obs.
 
 I `ripgreprc`:
 
