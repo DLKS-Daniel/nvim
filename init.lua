@@ -1,6 +1,5 @@
-vim.g.netrw_banner = 0
-vim.opt.laststatus = 2
 vim.opt.number = true
+vim.opt.laststatus = 2
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -12,30 +11,22 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
+vim.opt.findfunc = "v:lua.rg_find"
 vim.opt.clipboard:append("unnamedplus")
-vim.opt.path:append("src/**,static/,config/")
-vim.opt.wildignore:append("*/__pycache__/*,*/node_modules/*")
-
 vim.cmd.colorscheme({ "retrobox" })
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-
 vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/nvim-mini/mini.completion",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/tpope/vim-fugitive",
 })
-
 vim.keymap.set("n", "grd", vim.lsp.buf.definition)
 vim.keymap.set("n", "grf", vim.lsp.buf.format)
 vim.keymap.set("n", "-", require("oil").open)
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 vim.keymap.set("n", "<C-f>", ":find<Space>")
-vim.keymap.set("n", "<C-g>", function()
-  vim.cmd("silent! grep" .. vim.fn.input(":grep "))
-  vim.cmd("copen")
-end)
-
+vim.keymap.set("n", "<C-g>", ":silent grep -e<Space>")
 vim.lsp.enable({
   "lua_ls",
   "tsc",
@@ -45,6 +36,10 @@ vim.lsp.enable({
   "pyrefly",
   "ruff",
 })
-
 require("mini.completion").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
+vim.api.nvim_create_autocmd("QuickFixCmdPost", { pattern = { "grep", "make" }, command = "copen" })
+function _G.rg_find(arg)
+  arg = vim.fn.expand(arg)
+  return vim.fn.matchfuzzy(vim.fn.systemlist({ "rg", "--files", arg:match("^(.*/)(.*)$") }), arg)
+end
