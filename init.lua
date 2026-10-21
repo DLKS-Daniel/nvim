@@ -11,7 +11,7 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
-vim.opt.findfunc = "v:lua.rg_find"
+vim.opt.findfunc = "v:lua.git_ff"
 vim.opt.clipboard:append("unnamedplus")
 vim.cmd.colorscheme({ "retrobox" })
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -36,10 +36,7 @@ vim.lsp.enable({
   "pyrefly",
   "ruff",
 })
+function _G.git_ff(arg) return vim.fn.matchfuzzy(vim.fn.systemlist('git ls-files'), arg) end
+vim.api.nvim_create_autocmd("QuickFixCmdPost", { pattern = { "grep", "make" }, command = "copen" })
 require("mini.completion").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
-vim.api.nvim_create_autocmd("QuickFixCmdPost", { pattern = { "grep", "make" }, command = "copen" })
-function _G.rg_find(arg)
-  arg = vim.fn.expand(arg)
-  return vim.fn.matchfuzzy(vim.fn.systemlist({ "rg", "--files", arg:match("^(.*/)(.*)$") }), arg)
-end
