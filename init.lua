@@ -1,19 +1,14 @@
+vim.opt.shiftwidth = 2
 vim.opt.number = true
-vim.opt.laststatus = 2
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.cursorline = true
-vim.opt.undofile = true
-vim.opt.swapfile = false
 vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.findfunc = "v:lua.git_ff"
 vim.opt.clipboard:append("unnamedplus")
-vim.cmd.colorscheme({ "retrobox" })
+vim.cmd.colorscheme("retrobox")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
@@ -36,7 +31,10 @@ vim.lsp.enable({
   "pyrefly",
   "ruff",
 })
-function _G.git_ff(arg) return vim.fn.matchfuzzy(vim.fn.systemlist('git ls-files'), arg) end
-vim.api.nvim_create_autocmd("QuickFixCmdPost", { pattern = { "grep", "make" }, command = "copen" })
 require("mini.completion").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
+vim.api.nvim_create_autocmd("QuickFixCmdPost", { pattern = { "grep", "make" }, command = "copen" })
+function _G.git_ff(arg)
+  local files = vim.fn.systemlist('git ls-files')
+  return arg == "" and files or vim.fn.matchfuzzy(files, arg)
+end
