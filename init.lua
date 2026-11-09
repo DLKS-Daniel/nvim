@@ -9,7 +9,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.findfunc = "v:lua.git_ff"
 vim.opt.clipboard:append("unnamedplus")
-vim.cmd.colorscheme("retrobox")
+vim.cmd.colorscheme("catppuccin")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
@@ -27,13 +27,12 @@ vim.keymap.set("n", "<C-f>", ":find<Space>")
 vim.keymap.set("n", "<C-g>", ":silent grep -e<Space>")
 vim.keymap.set("n", "<A-g>", ":silent grep -e <cword><CR>")
 vim.lsp.enable({
-  "lua_ls",
-  "tsc",
   "jdtls",
   "jsonls",
+  "ruff",
+  "tsc",
   "tombi",
   "ty",
-  "ruff",
 })
 require("mini.completion").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
