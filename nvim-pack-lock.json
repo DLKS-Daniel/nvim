@@ -1,11 +1,15 @@
 {
   "plugins": {
+    "codepointer.nvim": {
+      "rev": "88cf19a3e206ffb1e92f08ab06f7085e6cfbf52a",
+      "src": "https://github.com/KanielDasper/codepointer.nvim"
+    },
     "mini.completion": {
       "rev": "ace27587795b84ae6a83b9bc7ff63aec0eebc252",
       "src": "https://github.com/nvim-mini/mini.completion"
     },
     "nvim-lspconfig": {
-      "rev": "77b7432d4770d23b277d37923e5a08a442d8bb07",
+      "rev": "d8d2fda7aae57030452ce8cd6e770b1eb704514e",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "oil.nvim": {

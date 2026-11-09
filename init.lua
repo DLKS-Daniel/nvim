@@ -4,6 +4,7 @@ vim.opt.expandtab = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.cursorline = true
+vim.opt.splitright = true
 vim.opt.signcolumn = "yes"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.findfunc = "v:lua.git_ff"
@@ -15,20 +16,23 @@ vim.pack.add({
   "https://github.com/nvim-mini/mini.completion",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/tpope/vim-fugitive",
+  "https://github.com/KanielDasper/codepointer.nvim",
 })
 vim.keymap.set("n", "grd", vim.lsp.buf.definition)
 vim.keymap.set("n", "grf", vim.lsp.buf.format)
+vim.keymap.set("n", "grp", require("codepointer").set_codepointer_to_register)
 vim.keymap.set("n", "-", require("oil").open)
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 vim.keymap.set("n", "<C-f>", ":find<Space>")
 vim.keymap.set("n", "<C-g>", ":silent grep -e<Space>")
+vim.keymap.set("n", "<A-g>", ":silent grep -e <cword><CR>")
 vim.lsp.enable({
   "lua_ls",
   "tsc",
   "jdtls",
   "jsonls",
   "tombi",
-  "pyrefly",
+  "ty",
   "ruff",
 })
 require("mini.completion").setup()
