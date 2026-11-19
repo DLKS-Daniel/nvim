@@ -5,16 +5,12 @@
       "src": "https://github.com/KanielDasper/codepointer.nvim"
     },
     "mini.completion": {
-      "rev": "cda8669fb9a7fd681016f43dddcc2a635f8b645d",
+      "rev": "8a36acb1bf6f927b6b6e35adcf84d82b940743d7",
       "src": "https://github.com/nvim-mini/mini.completion"
     },
     "nvim-lspconfig": {
-      "rev": "993d048db0d83d8e8ba3f9cb376456321acdcce3",
+      "rev": "4648fd8ba5c678d7e2db75ae44ffac269bb589d8",
       "src": "https://github.com/neovim/nvim-lspconfig"
-    },
-    "oil.nvim": {
-      "rev": "d3733d933833a0e59b813ecec99341527adf0c28",
-      "src": "https://github.com/stevearc/oil.nvim"
     },
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
